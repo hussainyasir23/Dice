@@ -78,6 +78,7 @@ class MyHomeView: UIView {
         
         rollButton.addTarget(self, action: #selector(self.onClickRoll), for: .touchUpInside)
         rollButton.setTitle("Roll", for: .normal)
+        rollButton.layer.cornerRadius = 10
         rollButton.titleLabel?.font = .systemFont(ofSize: 25)
         rollButton.backgroundColor = #colorLiteral(red: 0.6075378656, green: 0.1114451364, blue: 0.1189513579, alpha: 1)
         rollButton.isUserInteractionEnabled = true
@@ -90,11 +91,21 @@ class MyHomeView: UIView {
     }
     
     @objc func onClickRoll(){
-
+        animateRollButton(rollButton)
         dice1.image = diceArray.randomElement()
         dice2.image = diceArray.randomElement()
-        
-        print("pressed")
+    }
+    
+    func animateRollButton(_ viewToAnimate:UIButton){
+        UIView.animate(withDuration: 0.15, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 0.5, options: .curveEaseIn, animations: {
+            
+            viewToAnimate.transform = CGAffineTransform(scaleX: 0.92, y: 0.92)
+        }) { (_) in
+            UIView.animate(withDuration: 0.15, delay: 0, usingSpringWithDamping: 0.4, initialSpringVelocity: 2, options: .curveEaseIn, animations: {
+                
+                viewToAnimate.transform = CGAffineTransform(scaleX: 1, y: 1)
+            }, completion: nil)
+        }
     }
     
     let background = UIImageView()
